@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $this->call(ArtistBookSeeder::class);
+        $this->call(ArtistBookSeeder::class);       //llamamos al seeder de ArtistBook
     }
 }

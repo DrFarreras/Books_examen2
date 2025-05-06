@@ -26,13 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/books', [BookController::class, 'index'])->name('book.index');
-Route::get('/booksForm', [BookController::class, 'create'])->name('book.create');
-Route::post('/booksForm', [BookController::class, 'store'])->name('book.store');
-Route::get('/books/edit/{id}', [BookController::class, 'edit'])->name('book.edit');
-Route::post('/books/edit/{id}', [BookController::class, 'update'])->name('book.update');
-Route::delete('/books/delete/{id}', [BookController::class, 'destroy'])->name('book.delete');
-Route::get('/book/{id}',[BookController::class, 'show'])->name('book.show');
+Route::get('/books', [BookController::class, 'index'])->name('book.index');                     //Listar todos
+
+Route::get('/booksForm', [BookController::class, 'create'])->name('book.create');               //Crear     //VAN A LA MISMA RUTA 
+Route::post('/booksForm', [BookController::class, 'store'])->name('book.store');                //Guardar   //PARA GUARDAR LO CREADO
+
+Route::get('/books/edit/{id}', [BookController::class, 'edit'])->name('book.edit');             //Editar
+Route::post('/books/edit/{id}', [BookController::class, 'update'])->name('book.update');        //Guardar editado
+Route::delete('/books/delete/{id}', [BookController::class, 'destroy'])->name('book.delete');   //Borrar
+Route::get('/book/{id}',[BookController::class, 'show'])->name('book.show');                    //Mostrar uno solo
 
 
 require __DIR__.'/auth.php';

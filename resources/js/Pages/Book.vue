@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
-const props = defineProps({
-  book: Object,
+const props = defineProps({ //creamos un props con la variable del controller en este caso 'book' em el return inertia::Render('Book',['book'=>$book]) es el segundo 
+  book: Object,             //definimos que es un objeto
 });
 </script>
 

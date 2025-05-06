@@ -1,27 +1,27 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';   //se usa onMounted para rellenar los inputs con los datos, jejejeje
 import { useForm } from '@inertiajs/inertia-vue3';
 
-const props = defineProps({
-    book:Object
+const props = defineProps({ //creamos un props con la variable del controller en este caso 'book' em el return inertia::Render('Book',['book'=>$book]) es el segundo
+    book:Object,             //definimos que es un objeto
 });
 
-onMounted(() => {
-    form.name = props.book.name;
-    form.description=props.book.description;
-    form.barcode=props.book.barcode;
-    form.artist_id=props.book.artist_id;
+onMounted(() => {           //creamos el onMounted para rellenar los inputs con los datos
+    form.name = props.book.name;              //definimos que form.name es = que el name de props de book
+    form.description=props.book.description;  //definimos que form.description es = que el description de props de book
+    form.barcode=props.book.barcode;          //definimos que form.barcode es = que el barcode de props de book
+    form.artist_id=props.book.artist_id;      //definimos que form.artist_id es = que el artist_id de props de book
 });
 
-const form = useForm({
+const form = useForm({      //creamos el useForm para definir los campos del formulario.
    name: '',
    description: '',
    barcode: '',
    artist_id: '',
 });
 
-const submit = () => {
-    form.post(route('book.update', props.book.id))
+const submit = () => {      //creamos una funcion submit 
+    form.post(route('book.update', props.book.id))  //usa método post del formulario, cogiendo la info de los inputs y ejecuta la función update según el id pasado por props.book.id
 }
 
 </script>
@@ -35,7 +35,7 @@ const submit = () => {
         <div>
           <label for="name" class="block text-sm font-semibold text-gray-400 mb-2">Títol</label>
           <input 
-            v-model="form.name"
+            v-model="form.name" 
             id="name" 
             type="text" 
             required

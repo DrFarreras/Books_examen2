@@ -17,8 +17,8 @@ class ArtistFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->firstName(),
-            'surname' => $this->faker->lastName(),
+            'name' => $this->faker->firstName(),        //hacemos un faker y definimos que el campo de la bdd 'name' es un faker que usa el método firstName
+            'surname' => $this->faker->lastName(),      //hacemos un faker y definimos que el campo de la bdd 'surname' es un faker que usa el método lastName
         ];
     }
 }

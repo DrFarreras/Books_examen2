@@ -17,10 +17,10 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'description' => $this->faker->sentence(),
-            'barcode' => $this->faker->numberBetween(10000,99999),
-            'artist_id' => \App\Models\Artist::inRandomOrder()->first()->id,
+            'name' => $this->faker->word(),                                     //hacemos un faker y definimos que el campo de la bdd 'name' es un faker que usa el método word
+            'description' => $this->faker->sentence(),                          //hacemos un faker y definimos que el campo de la bdd 'description' es un faker que usa el método sentence
+            'barcode' => $this->faker->numberBetween(10000,99999),              //hacemos un faker y definimos que el campo de la bdd 'barcode' es un faker que usa el método numberBetween(10000,99999)
+            'artist_id' => \App\Models\Artist::inRandomOrder()->first()->id,    //hacemos un faker y definimos que el campo de la bdd 'artist_id' es un faker que usa el método inRandomOrder()->first()->id
         ];
     }
 }

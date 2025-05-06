@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'name',     //poner todos los campos de la bdd menos el id
         'description',
         'barcode',
         'artist_id',

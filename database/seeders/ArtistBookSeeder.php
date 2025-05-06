@@ -14,11 +14,11 @@ class ArtistBookSeeder extends Seeder
      */
     public function run(): void
     {
-        $artists = Artist::factory()->count(5)->create();
+        $artists = Artist::factory()->count(5)->create();       //hacemos un seeder que define que la variable $artists es = al modelo Artist que usa un factory y crea 5 artistas
 
-        foreach ($artists as $artist) {
-            Book::factory()->count(3)->create([
-                'artist_id' => $artist->id,    
+        foreach ($artists as $artist) {                         //definimos que por cada $artists que sea $artist
+            Book::factory()->count(3)->create([                 //del modelo Book que usa un factory crea 3 libros
+                'artist_id' => $artist->id,                     //definimos que artist_id = a la variable $artist->id
             ]);
         }
     }

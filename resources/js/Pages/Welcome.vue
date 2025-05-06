@@ -11,21 +11,13 @@ const props= defineProps({
 console.log(props.genderBook);
 console.log(props.books);
 
-function deleteBook(id){ 
-    if (confirm('Estas segur que vols eliminar aquest llibre?')) {
-        axios.delete(route('book.delete', id)).then(data => {
-            console.log(data);
-                props.books.splice(props.books.findIndex(f => f.id === id), 1);
-            })
-    }
-}
 const index = ref(0);
 
 const textos = [
-  'Benvingut al nostre projecte!',
-  'Explora les funcionalitats disponibles.',
-  'Recorda desar els teus progressos.',
-  'Gracies per visitar-nos!'
+  '/pexels-pixabay-159213.jpg', //cambiar por texto si se quiere
+  '/storage/app/public/image/2.png',
+  '/storage/app/public/image/3.png',
+  '/storage/app/public/image/4.png',
 ];
 
 const next = () => {
@@ -36,6 +28,14 @@ const prev = () => {
   index.value = index.value - 1;
 };
 
+function deleteBook(id){ 
+    if (confirm('Estas segur que vols eliminar aquest llibre?')) {
+        axios.delete(route('book.delete', id)).then(data => {
+            console.log(data);
+                props.books.splice(props.books.findIndex(f => f.id === id), 1);
+            })
+    }
+}
 </script>
 
 <template>
@@ -44,7 +44,7 @@ const prev = () => {
   <section class="relative min-h-screen py-6 px-2 md:px-4 sm:py-10 bg-gray-50">
     <div class="w-full max-w-xl mx-auto p-4">
     <div class="relative">
-      <p class="text-center bg-red-200">{{ textos[index] }}</p>
+      <img :src="textos[index]" class="text-center bg-red-200"></img> <!-- cambiar por  <p class="text-center">{{ textos[index] }}</p>  si es texto-->
 
       <div class="absolute top-1/2 left-0 transform -translate-y-1/2">
         <button @click="prev" class="bg-red-400 px-2 py-1 rounded shadow"><</button>
@@ -64,6 +64,7 @@ const prev = () => {
       ></span>
     </div>
   </div>
+  
     <div class="text-center mb-10">
       <h1 class="text-4xl font-extrabold text-red-600 underline">Biblioteca</h1>
       <p class="text-lg text-gray-600 mt-2">Descobreix llibres increïbles 📚</p>
