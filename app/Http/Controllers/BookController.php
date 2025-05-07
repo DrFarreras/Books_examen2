@@ -9,10 +9,12 @@ use App\Models\Book;
 class BookController extends Controller
 {
     public function index(){
-        $book=Book::with(['gender', 'artist'])->get(); //le pedimos con el with que tenga un campo gender. SE PILLA EL NOMBRE DE LA FUNCION DEL MODELO, SI NO LO PILLAS VES A MODELO TETE
+        $allbooks=Book::with(['gender', 'artist'])->get(); //le pedimos con el with que tenga un campo gender. SE PILLA EL NOMBRE DE LA FUNCION DEL MODELO, SI NO LO PILLAS VES A MODELO TETE
         
-        $books=Book::with('artist')->get(); //le pedimos que tenga una relacion con artist 'solo si solo tiene una relacion belongs_to con la tabla artist'
-        return Inertia::render('Welcome',['genderBook'=>$book]); //devuelve un render de la pagina welcome, donde pasa el parametro de vista 'genderBook' y 'artist' que asignamos que corresponde a la variable $book (en el caso de ser solo del belongs_to hacemos la variable de la vista 'artist' que corresponda a la variable $books)
+        $book=Book::with(['gender', 'artist'])->paginate(4);
+
+        //$books=Book::with('artist')->get(); //le pedimos que tenga una relacion con artist 'solo si solo tiene una relacion belongs_to con la tabla artist'
+        return Inertia::render('Welcome',['genderBook'=>$book, 'allBooks'=>$allbooks]); //devuelve un render de la pagina welcome, donde pasa el parametro de vista 'genderBook' y 'artist' que asignamos que corresponde a la variable $book (en el caso de ser solo del belongs_to hacemos la variable de la vista 'artist' que corresponda a la variable $books)
     }
 
     public function create(){

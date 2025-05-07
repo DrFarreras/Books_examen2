@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
-    book:Object
+    book:Object,
 });
 
 const form = useForm({
