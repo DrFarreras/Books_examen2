@@ -43,6 +43,8 @@ const submit = () => {      //creamos una funcion submit
             placeholder="Escriu el títol del llibre"
           />
         </div>
+        <!-- en v-model se escribe el form. y la const que hemos definido en const form, por ejemplo form.name -->
+        <!-- el label for=' ' sirve para que al pulsar sobre el titulo se seleccione el input, se enlaza en el input por el id=' ', por ejemplo el titulo con label for='name' se enlaza con el input id='name' -->
 
         <div>
           <label for="description" class="block text-sm font-semibold text-gray-400 mb-2">Descripció</label>
@@ -55,6 +57,7 @@ const submit = () => {      //creamos una funcion submit
             placeholder="Escriu una descripció del llibre"
           ></textarea>
         </div>
+        <!-- el label for=' ' sirve para que al pulsar sobre el titulo se seleccione el input, se enlaza en el input por el id=' ', por ejemplo el titulo con label for='description' se enlaza con el input id='description' -->
 
         <div>
           <label for="barcode" class="block text-sm font-semibold text-gray-400 mb-2">Codi de barres</label>

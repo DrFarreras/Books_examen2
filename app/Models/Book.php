@@ -20,7 +20,7 @@ class Book extends Model
     return $this->belongsTo(Artist::class);
 }
 
-    public function gender(){
+    public function gender(){   //A ESTO ME REFIERO, LE LLAMAMOS 'gender' DEBE COINCIDIR CON EL QUE LE PIDES AL CONTROLLER, ES EL NOMBRE DE LA FUNCION DEL MODELO LO QUE LE PIDES AL CONTROLLER
         return $this->belongsToMany(Gender::class, 'gender_books'); //hacemos un belongsToMany para diferenciar que es una relacion n-n. Despues del class, ponemos el nombre de la tabla que junta gender y book, en este caso genderBook,cuando es una relacion nn siempre debe haber una tabla que junte esas dos tablas que quieres relacionar.
     }
 

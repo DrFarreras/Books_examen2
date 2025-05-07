@@ -2,40 +2,40 @@
 import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue'
 
-const props= defineProps({
-    books: Array,
+const props= defineProps({  //creamos un props con la variable del controller en este caso 'genderBook' en el return Inertia::render('Welcome',['genderBook'=>$book]);
     genderBook: Array,
 }
 );
 
 console.log(props.genderBook);
-console.log(props.books);
+// console.log(props.books);
 
 const index = ref(0);
 
 const textos = [
-  '/pexels-pixabay-159213.jpg', //cambiar por texto si se quiere
+  '/pexels-pixabay-159213.jpg', //cambiar por texto si se quiere, en el caso de las imagenes, subirlas a la carpeta de public
   '/storage/app/public/image/2.png',
   '/storage/app/public/image/3.png',
   '/storage/app/public/image/4.png',
 ];
 
 const next = () => {
-  index.value = index.value + 1;
+  index.value = index.value + 1;  
 };
 
 const prev = () => {
   index.value = index.value - 1;
 };
 
-function deleteBook(id){ 
-    if (confirm('Estas segur que vols eliminar aquest llibre?')) {
-        axios.delete(route('book.delete', id)).then(data => {
-            console.log(data);
-                props.books.splice(props.books.findIndex(f => f.id === id), 1);
+function deleteBook(id){  //creamos una funcion que borre un book pasándole la id
+    if (confirm('Estas segur que vols eliminar aquest llibre?')) {    //si aceptamos el alert entonces...
+        axios.delete(route('book.delete', id)).then(data => {       //ejecutamos la ruta book.delete pasándole el id
+            console.log(data);    //muestra la info del book borrado por consola
+                props.genderBook.splice(props.genderBook.findIndex(f => f.id === id), 1); //en los apuntes
             })
     }
 }
+
 </script>
 
 <template>
@@ -72,13 +72,13 @@ function deleteBook(id){
 
     <div class="w-full flex justify-center">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-screen-xl px-4">
-        <div v-for="libro in props.genderBook" :key="libro.id" class="bg-white border border-red-400 shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
+        <div v-for="libro in props.genderBook" :key="libro.id" class="bg-white border border-red-400 shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300"> <!--por cada libro en la array books (esto para que coja cada libro de la array, sino no sabe cual coger), y en key le decimos que es el id por libro.id-->
           <div class="p-6 flex flex-col justify-between h-full">
             <div>
               <h2 class="text-2xl font-bold mb-2 text-red-600">{{ libro.name }}</h2>
               <h2 class="text-2xl font-bold mb-2 text-red-600">Nom Artista: {{ libro.artist.name }}</h2>
               <h3 class="text-md font-semibold text-gray-500 mb-4">Cognom Artista: {{ libro.artist.surname }}</h3>
-              <h3 class="text-md font-semibold text-gray-500 mb-4">Cognom Artista: {{ libro}}</h3>
+              <h3 v-if="libro.gender && libro.gender.length > 0" class="text-md font-semibold text-gray-500 mb-4" >Gènere: {{ libro.gender[0].name }}</h3> <!--Comprueba si libro.gender existe, y si es que si, luego mira que el array tenga más de 0 elementos, o sea que no esté vacío-->
               <h3 class="text-md font-semibold text-gray-500 mb-4">Barcode: {{ libro.barcode }}</h3>
               <p class="text-gray-700 text-sm">Descripció: {{ libro.description }}</p>
               <Link :href="`/books/edit/${libro.id}`" class="mt-4 block text-center bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-full font-bold transition-colors">Editar el llibre</Link>
