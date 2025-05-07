@@ -4,13 +4,16 @@ import { useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     book:Object,
+    allGenders:Array,
+    allArtists:Array,
 });
 
 const form = useForm({
    name: '',
    description: '',
    barcode: '',
-   artist_id: '',
+   artist_id: '',     
+   gender: [],
 });
 
 const submit = () => {
@@ -61,6 +64,36 @@ const submit = () => {
           ></textarea>
         </div>
 
+        <div>
+          <label for="artist" class="block text-sm font-semibold text-gray-400 mb-2">Artista</label>
+          <select 
+            v-model="form.artist_id"
+            id="artist_id"
+            rows="1"
+            required
+            class="w-full p-3 rounded bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600">
+            <option disabled value="">Selecciona un artista</option>
+              <option v-for="artist in props.allArtists" :key="artist.id" :value="artist.id">
+                {{ artist.name }}
+              </option>
+            </select>
+        </div>
+
+        <div>
+          <label for="gender" class="block text-sm font-semibold text-gray-400 mb-2">Gènere</label>
+          <select 
+            v-model="form.gender"
+            id="gender" 
+            multiple
+            required
+            class="w-full p-3 rounded bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600">
+            
+            <option v-for="g in props.allGenders" :key="g.id" :value="g.id">
+              {{ g.name }}
+            </option>
+          </select>
+        </div>
+        
         <button
           type="submit"
           class="w-full bg-red-600 hover:bg-red-700 transition-colors text-white font-bold py-3 rounded text-lg"

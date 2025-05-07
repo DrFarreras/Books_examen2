@@ -36,11 +36,11 @@ const textos = [
 ];
 
 const next = () => {
-  index.value = index.value + 1;
+  index.value = (index.value + 1) % textos.length;  //coge el index, le suma 1 y luego lo divide entre todos los textos que hay en la array textos para que suba una posición
 };
 
 const prev = () => {
-  index.value = index.value - 1;
+  index.value = (index.value - 1 + textos.length) % textos.length;  //coge el index, le resta 1 y se le suma el numero de textos que hay en la array textos luego lo divide entre todos los textos que hay en la array textos para que baje una posición
 };
 
 function deleteBook(id) {  //creamos una funcion que borre un book pasándole la id
@@ -100,12 +100,12 @@ function deleteBook(id) {  //creamos una funcion que borre un book pasándole la
         <div v-for="libro in (searchBookQuery ? filteredBookItems : props.genderBook.data)" :key="libro.id" class="bg-white border border-red-400 shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">  <!--por cada libro en la array books (esto para que coja cada libro de la array, sino no sabe cual coger), y en key le decimos que es el id por libro.id-->
           <div class="p-6 flex flex-col justify-between h-full">
             <div>
-              <h2 class="text-2xl font-bold mb-2 text-red-600">{{ libro.name }}</h2> <!--buscamos los datos de book-->
-              <h2 class="text-2xl font-bold mb-2 text-red-600">Nom Artista: {{ libro.artist.name }}</h2>  <!--buscamos los datos de artist ya que está relacionado con book-->
+              <h2 class="text-2xl font-bold mb-4 text-red-600 uppercase">Títol: {{ libro.name }}</h2> <!--buscamos los datos de book-->
+              <h2 class="text-md font-semibold mb-4 text-gray-500">Nom Artista: {{ libro.artist.name }}</h2>  <!--buscamos los datos de artist ya que está relacionado con book-->
               <h3 class="text-md font-semibold text-gray-500 mb-4">Cognom Artista: {{ libro.artist.surname }}</h3>
               <h3 v-if="libro.gender && libro.gender.length > 0" class="text-md font-semibold text-gray-500 mb-4"> Gènere: {{ libro.gender[0].name }}</h3>  <!--Comprueba si libro.gender existe, y si es que si, luego mira que el array tenga más de 0 elementos, o sea que no esté vacío-->
               <h3 class="text-md font-semibold text-gray-500 mb-4">Barcode: {{ libro.barcode }}</h3>
-              <p class="text-gray-700 text-sm">Descripció: {{ libro.description }}</p>
+              <p class="text-md font-semibold mb-4 text-gray-500">Descripció: {{ libro.description }}</p>
               <Link :href="`/books/edit/${libro.id}`"
                 class="mt-4 block text-center bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-full font-bold transition-colors">
               Editar el llibre</Link>

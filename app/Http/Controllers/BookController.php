@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Book;
+use App\Models\Gender;
 
 class BookController extends Controller
 {
@@ -17,44 +19,55 @@ class BookController extends Controller
         return Inertia::render('Welcome',['genderBook'=>$book, 'allBooks'=>$allbooks]); //devuelve un render de la pagina welcome, donde pasa el parametro de vista 'genderBook' y 'artist' que asignamos que corresponde a la variable $book (en el caso de ser solo del belongs_to hacemos la variable de la vista 'artist' que corresponda a la variable $books)
     }
 
+    
     public function create(){
-        return Inertia::render('BookForm');     //le pedimos que renderice el formulario de 'BookForm'
+        $allGenders = Gender::all();            //le pasamos que la variable $allGenders es = al select * from Gender
+        $allArtists = Artist::all();            //le pasamos que la variable $allArtists es = al select * from Artist
+        return Inertia::render('BookForm', ['allGenders' => $allGenders, 'allArtists' => $allArtists]);     //le pedimos que renderice el formulario de 'BookForm' y le pasamos los datos de las variables a la vista
     }
 
     public function store(Request $request){
+        dd($request->all());
         $request->validate([                    //hacemos validaciones del request
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'barcode' => 'required|string|max:255',
+            'artist_id' => 'required|integer',
+            'gender' => 'required|array',       //validamos que genero es un array
         ]);
         $book = Book::create([                  //una vez hechas las validaciones del request, se crean los datos a partir de la bdd con los inputs ('name' por ejemplo es en este caso el campo de la bdd y el $request->name es del input de la vista).
             'name' => $request->name,
             'description' => $request->description,
             'barcode' => $request->barcode,
-            'artist_id' => 1,                   
+            'artist_id' => $request->artist_id,
         ]);
         $book->save();                          //hacemos un save de los datos
+
+        $book->gender()->sync($request->gender);         //sincroniza la relación nn entre el libro ($book) y los géneros (gender), usando los IDs que vienen en $request->gender
         return to_route('book.index');          //hacemos un return a book.index (book.index pertenece a la ruta name->('book.index) en web.php)
     }
 
     public function edit(Request $request){
-        $book=Book::find($request->id);         //definimos que la variable $book sea igual al modelo Book y busque el id del request
-        return Inertia::render('BookEdit',['book'=>$book]);     //devuelve un render del formulario de edicion BookEdit y le pasamos que los datos del 'book' es = a $book
+        $book=Book::with(['gender', 'artist'])->find($request->id);
+        $allGenders=Gender::all();        //definimos que la variable $book sea igual al modelo Book y busque el id del request
+        return Inertia::render('BookEdit',['book'=>$book, 'allGenders' => $allGenders]);     //devuelve un render del formulario de edicion BookEdit y le pasamos que los datos del 'book' es = a $book
         // dd($book);
         // dd($request->id);
     }
 
     public function update(Request $request){
-        $book=Book::find($request->id);         //definimos que la variable $book sea igual al modelo Book y busque el id del request
+        $book=Book::with(['gender', 'artist'])->find($request->id);         //definimos que la variable $book sea igual al modelo Book y busque el id del request
         $book->name=$request->name;             //definimos que los datos de la vista name en $request->name es igual al campo name del modelo
         $book->description=$request->description; //definimos que los datos de la vista description en $request->description es igual al campo description del modelo
         $book->barcode=$request->barcode;       //definimos que los datos de la vista barcode en $request->barcode es igual al campo barcode del modelo
         $book->artist_id=$request->artist_id;   //definimos que los datos de la vista artist_id en $request->artist_id es igual al campo artist_id del modelo
 
         $book->save();                          //guardamos la variable $book con esos cambios
+
+        $book->gender()->sync($request->gender);         //sincroniza la relación nn entre el libro ($book) y los géneros (gender), usando los IDs que vienen en $request->gender
         return to_route('book.index');          //devolvemos a la ruta index book
 
-        // dd($request->id);
+        dd($request);
     }
 
     public function destroy(Request $request){  

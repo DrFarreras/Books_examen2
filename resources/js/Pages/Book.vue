@@ -18,7 +18,7 @@ console.log(props.book);
 
         <!-- Informació del llibre -->
         <div class="w-full md:w-2/3 text-white">
-          <h1 class="text-4xl font-bold mb-4">{{ props.book.name }}</h1>
+          <h1 class="text-4xl font-bold mb-4">Títol: {{ props.book.name }}</h1>
 
           <div class="mt-6">
             <h2 class="text-2xl font-semibold underline mb-2">Descripció</h2>
@@ -31,6 +31,10 @@ console.log(props.book);
 
           <p class="text-white mt-6 mb-2">
             <span class="font-semibold text-white">Nom de l'artista:</span> {{ props.book.artist.name || 'No disponible' }}
+          </p>
+
+          <p class="text-white mt-6 mb-2">
+            <span class="font-semibold text-white">Cognom de l'artista:</span> {{ props.book.artist.surname || 'No disponible' }}
           </p>
 
           <p class="text-white mt-6 mb-2">

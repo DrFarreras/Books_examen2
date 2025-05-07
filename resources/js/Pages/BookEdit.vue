@@ -3,22 +3,28 @@ import { onMounted, ref } from 'vue';   //se usa onMounted para rellenar los inp
 import { useForm } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({ //creamos un props con la variable del controller en este caso 'book' em el return inertia::Render('Book',['book'=>$book]) es el segundo
-    book:Object,             //definimos que es un objeto
+  book:Object,              //definimos que es un objeto
+  allGenders:Array,
 });
 
-onMounted(() => {           //creamos el onMounted para rellenar los inputs con los datos
-    form.name = props.book.name;              //definimos que form.name es = que el name de props de book
-    form.description=props.book.description;  //definimos que form.description es = que el description de props de book
-    form.barcode=props.book.barcode;          //definimos que form.barcode es = que el barcode de props de book
-    form.artist_id=props.book.artist_id;      //definimos que form.artist_id es = que el artist_id de props de book
-});
-
-const form = useForm({      //creamos el useForm para definir los campos del formulario.
+const form = useForm({      //creamos el useForm para definir los campos del formulario. SIEMPRE EL useForm delante del onMounted ya que se crea primero y asi evitamos problemas de que se rellenen los campos como cuando no me acuerdo y tengo que recargar dos veces
    name: '',
    description: '',
    barcode: '',
    artist_id: '',
+   gender: [],
 });
+
+
+onMounted(() => {           //creamos el onMounted para rellenar los inputs con los datos
+    form.name = props.book.name || "";              //definimos que form.name es = que el name de props de book y si no encuentra relleno ese campo no pone nada asi deja que se rellenen los demas campos
+    form.description=props.book.description || "";  //definimos que form.description es = que el description de props de book y si no encuentra relleno ese campo no pone nada asi deja que se rellenen los demas campos
+    form.barcode=props.book.barcode || "";          //definimos que form.barcode es = que el barcode de props de book y si no encuentra relleno ese campo no pone nada asi deja que se rellenen los demas campos
+    form.artist_id=props.book.artist_id || "";      //definimos que form.artist_id es = que el artist_id de props de book y si no encuentra relleno ese campo no pone nada asi deja que se rellenen los demas campos
+    form.gender=props.book.gender.map(g => g.id) || ""; //definimos que form.gender es = que el gender.map(y le pasamos su id) de props de book y si no encuentra relleno ese campo no pone nada asi deja que se rellenen los demas campos
+});
+
+console.log(props.book);
 
 const submit = () => {      //creamos una funcion submit 
     form.post(route('book.update', props.book.id))  //usa método post del formulario, cogiendo la info de los inputs y ejecuta la función update según el id pasado por props.book.id
@@ -69,6 +75,21 @@ const submit = () => {      //creamos una funcion submit
             class="w-full p-3 rounded bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600"
             placeholder="Escriu el codi de barres del llibre"
           ></textarea>
+        </div>
+
+        <div>
+          <label for="gender" class="block text-sm font-semibold text-gray-400 mb-2">Gènere</label>
+          <select 
+            v-model="form.gender"
+            id="gender" 
+            multiple
+            required
+            class="w-full p-3 rounded bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-600">
+            
+            <option v-for="g in props.allGenders" :key="g.id" :value="g.id">
+              {{ g.name }}
+            </option>
+          </select>
         </div>
 
         <button
