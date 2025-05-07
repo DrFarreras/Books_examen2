@@ -60,8 +60,7 @@ function deleteBook(id) {  //creamos una funcion que borre un book pasándole la
   <section class="relative min-h-screen py-6 px-2 md:px-4 sm:py-10 bg-gray-50">
     <div class="w-full max-w-xl mx-auto p-4">
       <div class="relative">
-        <img :src="textos[index]" class="text-center bg-red-200"></img>
-        <!-- cambiar por  <p class="text-center">{{ textos[index] }}</p>  si es texto-->
+        <img :src="textos[index]" class="text-center bg-red-200"></img> <!-- cambiar por  <p class="text-center">{{ textos[index] }}</p>  si es texto-->
 
         <div class="absolute top-1/2 left-0 transform -translate-y-1/2">
           <button @click="prev" class="bg-red-400 px-2 py-1 rounded shadow"><</button>
@@ -98,18 +97,13 @@ function deleteBook(id) {  //creamos una funcion que borre un book pasándole la
 
     <div class="w-full flex justify-center">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-screen-xl px-4">
-        <div v-for="libro in (searchBookQuery ? filteredBookItems : props.genderBook.data)" :key="libro.id"
-          class="bg-white border border-red-400 shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">
-          <!--por cada libro en la array books (esto para que coja cada libro de la array, sino no sabe cual coger), y en key le decimos que es el id por libro.id-->
+        <div v-for="libro in (searchBookQuery ? filteredBookItems : props.genderBook.data)" :key="libro.id" class="bg-white border border-red-400 shadow-lg rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300">  <!--por cada libro en la array books (esto para que coja cada libro de la array, sino no sabe cual coger), y en key le decimos que es el id por libro.id-->
           <div class="p-6 flex flex-col justify-between h-full">
             <div>
               <h2 class="text-2xl font-bold mb-2 text-red-600">{{ libro.name }}</h2> <!--buscamos los datos de book-->
-              <h2 class="text-2xl font-bold mb-2 text-red-600">Nom Artista: {{ libro.artist.name }}</h2>
-              <!--buscamos los datos de artist ya que está relacionado con book-->
+              <h2 class="text-2xl font-bold mb-2 text-red-600">Nom Artista: {{ libro.artist.name }}</h2>  <!--buscamos los datos de artist ya que está relacionado con book-->
               <h3 class="text-md font-semibold text-gray-500 mb-4">Cognom Artista: {{ libro.artist.surname }}</h3>
-              <h3 v-if="libro.gender && libro.gender.length > 0" class="text-md font-semibold text-gray-500 mb-4">
-                Gènere: {{ libro.gender[0].name }}</h3>
-              <!--Comprueba si libro.gender existe, y si es que si, luego mira que el array tenga más de 0 elementos, o sea que no esté vacío-->
+              <h3 v-if="libro.gender && libro.gender.length > 0" class="text-md font-semibold text-gray-500 mb-4"> Gènere: {{ libro.gender[0].name }}</h3>  <!--Comprueba si libro.gender existe, y si es que si, luego mira que el array tenga más de 0 elementos, o sea que no esté vacío-->
               <h3 class="text-md font-semibold text-gray-500 mb-4">Barcode: {{ libro.barcode }}</h3>
               <p class="text-gray-700 text-sm">Descripció: {{ libro.description }}</p>
               <Link :href="`/books/edit/${libro.id}`"

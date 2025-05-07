@@ -65,7 +65,8 @@ class BookController extends Controller
     }
 
     public function show(Request $request){
-        $book=Book::find($request->id);         //definimos que la variable $book sea igual al modelo Book y busque el id del request
+        $book=Book::with(['gender', 'artist'])->find($request->id);  //definimos que la variable $book sea igual al modelo Book con la relación de gender y artist y busque el id del request
+
         return Inertia::render('Book',['book'=>$book]); //devuelve un render del formulario de edicion Book y le pasamos que los datos del 'book' es = a $book
     }
 }
